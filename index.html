@@ -217,11 +217,6 @@
             font-size: 1rem;
         }
 
-        .thank-you {
-            text-align: center;
-            display: none;
-        }
-
         /* Dashboard */
         .dashboard {
             display: none;
@@ -312,6 +307,22 @@
         .amount-btn:hover, .amount-btn.selected {
             background: var(--accent);
             color: var(--primary);
+        }
+
+        /* Rewards Section */
+        .rewards-display {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .rewards-points {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 10px 0;
         }
 
         /* Responsive */
@@ -451,38 +462,31 @@
         <div class="container">
             <h2>Join the Financial Revolution</h2>
             <div class="waitlist-form">
-                <div id="waitlist-content">
-                    <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <input type="text" id="name" placeholder="Enter your full name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" placeholder="Enter your email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="language">Preferred Language</label>
-                        <select id="language" required>
-                            <option value="">Select Language</option>
-                            <option value="english">English</option>
-                            <option value="hindi">Hindi</option>
-                            <option value="tamil">Tamil</option>
-                            <option value="telugu">Telugu</option>
-                            <option value="kannada">Kannada</option>
-                            <option value="marathi">Marathi</option>
-                            <option value="bengali">Bengali</option>
-                            <option value="gujarati">Gujarati</option>
-                            <option value="malayalam">Malayalam</option>
-                            <option value="punjabi">Punjabi</option>
-                        </select>
-                    </div>
-                    <button class="btn" onclick="submitWaitlist()">Join Waitlist</button>
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="Enter your full name" required>
                 </div>
-                <div class="thank-you" id="thank-you">
-                    <h3>🎉 Thank You for Joining!</h3>
-                    <p>You're now part of the financial inclusion revolution.</p>
-                    <button class="btn" onclick="showDashboard()">Open Dashboard</button>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
                 </div>
+                <div class="form-group">
+                    <label for="language">Preferred Language</label>
+                    <select id="language" required>
+                        <option value="">Select Language</option>
+                        <option value="english">English</option>
+                        <option value="hindi">Hindi</option>
+                        <option value="tamil">Tamil</option>
+                        <option value="telugu">Telugu</option>
+                        <option value="kannada">Kannada</option>
+                        <option value="marathi">Marathi</option>
+                        <option value="bengali">Bengali</option>
+                        <option value="gujarati">Gujarati</option>
+                        <option value="malayalam">Malayalam</option>
+                        <option value="punjabi">Punjabi</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="submitWaitlist()">Join Waitlist</button>
             </div>
         </div>
     </section>
@@ -493,6 +497,12 @@
             <div class="dashboard-header">
                 <h2>FinOne Dashboard</h2>
                 <button class="btn" onclick="showWaitlist()">← Back</button>
+            </div>
+            
+            <div class="rewards-display">
+                <h3>Your Reward Points</h3>
+                <div class="rewards-points" id="reward-points">0</div>
+                <p>Earn points for first-time transactions and financial activities</p>
             </div>
             
             <div class="cards-grid">
@@ -515,6 +525,11 @@
                     <i class="fas fa-shield-alt"></i>
                     <h3>Insurance</h3>
                     <p>Protect what matters most</p>
+                </div>
+                <div class="card" onclick="showModule('rewards')">
+                    <i class="fas fa-gift"></i>
+                    <h3>Rewards</h3>
+                    <p>Redeem your earned points</p>
                 </div>
             </div>
 
@@ -546,12 +561,10 @@
             <button class="btn" onclick="verifyCode()">Verify</button>
         </div>
         
-        <div id="password-step" style="display:none;">
-            <div class="form-group">
-                <label for="password">Enter Password</label>
-                <input type="password" id="password" placeholder="Enter your password">
-            </div>
-            <button class="btn" onclick="completePayment()">Complete Payment</button>
+        <div id="receiver-transaction-step" style="display:none;">
+            <h3>Receiver's First Transaction</h3>
+            <p>Receiver must complete their first transaction to unlock rewards</p>
+            <button class="btn" onclick="completeReceiverTransaction()">Complete Receiver Transaction</button>
         </div>
         
         <button class="btn" onclick="hidePaymentFlow()" style="background:rgba(255,255,255,0.1);">Cancel</button>
@@ -646,7 +659,39 @@
         </div>
     </section>
 
+    <!-- Rewards Module -->
+    <section class="module-section" id="rewards-module">
+        <div class="container">
+            <h2>Your Rewards</h2>
+            <div class="rewards-display">
+                <h3>Total Reward Points</h3>
+                <div class="rewards-points" id="rewards-total">0</div>
+                <p>Earned through first-time transactions and financial activities</p>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <i class="fas fa-gift"></i>
+                    <h3>Redeem Points</h3>
+                    <p>Exchange points for cashback or services</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-history"></i>
+                    <h3>Reward History</h3>
+                    <p>View your earned rewards timeline</p>
+                </div>
+            </div>
+            
+            <button class="btn" onclick="hideModule('rewards')" style="background:rgba(255,255,255,0.1); margin-top:30px;">Back</button>
+        </div>
+    </section>
+
     <script>
+        // Global state
+        let currentUser = null;
+        let rewardPoints = 0;
+        let firstTimeReceivers = new Set(); // Track first-time receivers
+
         // Waitlist functionality
         function submitWaitlist() {
             const name = document.getElementById('name').value;
@@ -654,8 +699,8 @@
             const language = document.getElementById('language').value;
             
             if (name && email && language) {
-                document.getElementById('waitlist-content').style.display = 'none';
-                document.getElementById('thank-you').style.display = 'block';
+                currentUser = { name, email, language };
+                showDashboard();
             } else {
                 alert('Please fill all fields');
             }
@@ -664,6 +709,9 @@
         function showDashboard() {
             document.getElementById('waitlist').style.display = 'none';
             document.getElementById('dashboard').style.display = 'block';
+            
+            // Update reward points display
+            updateRewardPoints();
             
             // Generate QR code
             const qr = new QRious({
@@ -676,6 +724,24 @@
         function showWaitlist() {
             document.getElementById('dashboard').style.display = 'none';
             document.getElementById('waitlist').style.display = 'block';
+        }
+
+        // Reward points management
+        function updateRewardPoints() {
+            document.getElementById('reward-points').textContent = rewardPoints;
+            document.getElementById('rewards-total').textContent = rewardPoints;
+        }
+
+        function addRewardPoints(points) {
+            rewardPoints += points;
+            updateRewardPoints();
+            
+            // Show confetti for rewards
+            confetti({
+                particleCount: 50,
+                spread: 50,
+                origin: { y: 0.8 }
+            });
         }
 
         // Payment Flow
@@ -723,86 +789,11 @@
         function processVoiceCommand(command) {
             // Simple parsing - in reality, this would be more sophisticated
             const amountMatch = command.match(/(?:₹|rs|rupees)\s*(\d+)/i);
-            const nameMatch = command.match(/to\s+(.+)$/i);
-            
-            if (amountMatch && nameMatch) {
-                const amount = amountMatch[1];
-                const name = nameMatch[1];
-                
-                // Show verification step
-                const verCode = Math.floor(1000 + Math.random() * 9000);
-                document.getElementById('ver-code').textContent = verCode;
-                document.getElementById('verification-step').style.display = 'block';
-                
-                // Store for later use
-                window.paymentData = { amount, name, verCode };
-            }
-        }
-
-        function verifyCode() {
-            const enteredCode = document.getElementById('verify-code').value;
-            if (parseInt(enteredCode) === window.paymentData.verCode) {
-                document.getElementById('verification-step').style.display = 'none';
-                document.getElementById('password-step').style.display = 'block';
-            } else {
-                alert('Incorrect verification code');
-            }
-        }
-
-        function completePayment() {
-            const password = document.getElementById('password').value;
-            if (password) {
-                document.getElementById('password-step').style.display = 'none';
-                
-                // Show confetti
-                confetti({
-                    particleCount: 150,
-                    spread: 70,
-                    origin: { y: 0.6 }
-                });
-                
-                alert(`Payment of ₹${window.paymentData.amount} to ${window.paymentData.name} successful!`);
-                hidePaymentFlow();
-            } else {
-                alert('Please enter password');
-            }
-        }
-
-        function showPaymentFlow() {
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('payment-flow').style.display = 'block';
-        }
-
-        function hidePaymentFlow() {
-            document.getElementById('payment-flow').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
-            document.getElementById('verification-step').style.display = 'none';
-            document.getElementById('password-step').style.display = 'none';
-            document.getElementById('transcript').textContent = 'Click microphone to speak...';
-            document.getElementById('mic-btn').classList.remove('listening');
-        }
-
-        // Module Functions
-        function showModule(moduleName) {
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById(`${moduleName}-module`).style.display = 'block';
+            const nameMatch = command.match(/to\s+(.+)%%%LATEX_BLOCK_0%%%{amount} to %%%LATEX_BLOCK_1%%%{amount} to %%%LATEX_BLOCK_2%%%{moduleName}-module`).style.display = 'block';
         }
 
         function hideModule(moduleName) {
-            document.getElementById(`${moduleName}-module`).style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
-        }
-
-        // Savings Module
-        function setSavingsGoal(goal, amounts) {
-            document.getElementById('goal-name').textContent = goal;
-            const optionsContainer = document.getElementById('amount-options');
-            optionsContainer.innerHTML = '';
-            
-            amounts.forEach(amount => {
-                const btn = document.createElement('div');
-                btn.className = 'amount-btn';
-                btn.textContent = `₹${amount}`;
+            document.getElementById(`%%%LATEX_BLOCK_3%%%{amount}`;
                 btn.onclick = function() {
                     document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
                     this.classList.add('selected');
@@ -816,7 +807,8 @@
 
         function simulateSaving() {
             if (window.selectedAmount) {
-                alert(`Started saving ₹${window.selectedAmount} for ${document.getElementById('goal-name').textContent}!`);
+                addRewardPoints(10); // Reward for setting savings goal
+                alert(`Started saving ₹%%%LATEX_BLOCK_4%%%{document.getElementById('goal-name').textContent}! You earned 10 reward points!`);
                 hideModule('savings');
             } else {
                 alert('Please select an amount');
@@ -832,16 +824,8 @@
 
         function simulateLoanApproval() {
             if (window.selectedLoanAmount) {
-                alert(`Loan of ₹${window.selectedLoanAmount} approved! Funds will be credited shortly.`);
-                hideModule('loans');
-            } else {
-                alert('Please select a loan amount');
-            }
-        }
-
-        // Insurance Module
-        function purchaseInsurance(type) {
-            alert(`${type} insurance purchased successfully! Your policy details will be sent to your registered email.`);
+                addRewardPoints(20); // Reward for loan application
+                alert(`Loan of ₹%%%LATEX_BLOCK_5%%%{type} insurance purchased successfully! You earned 15 reward points! Your policy details will be sent to your registered email.`);
             hideModule('insurance');
         }
 
