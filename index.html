@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FinOne — Universal Super Wallet</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
     <style>
         :root {
-            --primary: #0f0c29;
-            --secondary: #302b63;
-            --accent: #00c9ff;
-            --text: #ffffff;
+            --gradient-start: #0f0c29;
+            --gradient-middle: #302b63;
+            --gradient-end: #24243e;
+            --accent-primary: #00f5d4;
+            --accent-secondary: #9b5de5;
             --card-bg: rgba(255, 255, 255, 0.08);
-            --transition: all 0.3s ease;
+            --text-primary: #ffffff;
+            --text-secondary: #b8b8b8;
         }
 
         * {
@@ -25,93 +25,36 @@
         }
 
         body {
-            background: linear-gradient(135deg, var(--primary), var(--secondary), #24243e);
-            color: var(--text);
-            line-height: 1.6;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-middle), var(--gradient-end));
+            color: var(--text-primary);
+            min-height: 100vh;
             overflow-x: hidden;
         }
 
         .container {
-            width: 90%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
-        }
-
-        section {
-            padding: 80px 0;
-        }
-
-        h1, h2, h3, h4 {
-            font-weight: 700;
-            line-height: 1.2;
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(to right, #00c9ff, #92fe9d);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        h2 {
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        p {
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 15px 30px;
-            background: linear-gradient(90deg, var(--accent), #92fe9d);
-            color: var(--primary);
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            box-shadow: 0 4px 15px rgba(0, 201, 255, 0.3);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 201, 255, 0.5);
+            padding: 0 20px;
         }
 
         /* Navigation */
         nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(15, 12, 41, 0.9);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            padding: 20px 0;
-        }
-
-        .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(15, 12, 41, 0.8);
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: linear-gradient(to right, #00c9ff, #92fe9d);
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -122,68 +65,139 @@
         }
 
         .nav-links a {
-            color: var(--text);
+            color: var(--text-secondary);
             text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
+            transition: color 0.3s;
         }
 
         .nav-links a:hover {
-            color: var(--accent);
+            color: var(--accent-primary);
         }
 
         /* Hero Section */
         .hero {
             height: 100vh;
             display: flex;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
             text-align: center;
+            padding-top: 60px;
         }
 
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .subtitle {
+        .hero p {
             font-size: 1.5rem;
-            margin-bottom: 1rem;
-            opacity: 0.9;
+            margin-bottom: 10px;
+            color: var(--text-secondary);
         }
 
-        .tagline {
+        .hero .tagline {
             font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.8;
+            margin-bottom: 30px;
+            max-width: 600px;
         }
 
-        /* Cards Grid */
-        .cards-grid {
+        .btn {
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 245, 212, 0.3);
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Problem Section */
+        .problem-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
-            margin-top: 2rem;
         }
 
         .card {
             background: var(--card-bg);
             border-radius: 20px;
             padding: 30px;
-            transition: var(--transition);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border-color: rgba(0, 201, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .card i {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 20px;
-            color: var(--accent);
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        /* Solution Section */
+        .solution-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        /* User Journey */
+        .journey-stories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .story {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .story .emoji {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
         }
 
         /* Waitlist Form */
@@ -212,8 +226,8 @@
             padding: 15px;
             border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text);
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
             font-size: 1rem;
         }
 
@@ -226,21 +240,46 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
-        .qr-section {
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .dashboard-card {
             background: var(--card-bg);
-            padding: 30px;
             border-radius: 20px;
+            padding: 30px;
             text-align: center;
-            margin: 30px 0;
+            cursor: pointer;
+            transition: transform 0.3s;
         }
 
-        #qr-code {
-            margin: 20px auto;
+        .dashboard-card:hover {
+            transform: scale(1.05);
+        }
+
+        .dashboard-card i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        /* QR Code */
+        .qr-code {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .qr-code img {
             width: 200px;
             height: 200px;
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
         }
 
         /* Payments Flow */
@@ -249,96 +288,86 @@
             max-width: 600px;
             margin: 0 auto;
             background: var(--card-bg);
-            padding: 30px;
+            padding: 40px;
             border-radius: 20px;
-        }
-
-        .mic-input {
             text-align: center;
-            margin: 30px 0;
         }
 
         .mic-btn {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
             border: none;
-            color: white;
-            font-size: 2rem;
+            margin: 30px auto;
             cursor: pointer;
-            margin: 20px auto;
-            display: block;
-            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            transition: transform 0.3s;
         }
 
-        .mic-btn.listening {
-            animation: pulse 1.5s infinite;
+        .mic-btn:hover {
+            transform: scale(1.1);
         }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 75, 43, 0.7); }
-            70% { box-shadow: 0 0 0 20px rgba(255, 75, 43, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 75, 43, 0); }
-        }
-
-        /* Module Sections */
-        .module-section {
+        .verification {
             display: none;
         }
 
-        .amount-options {
-            display: flex;
-            flex-wrap: wrap;
+        .code-display {
+            font-size: 2rem;
+            letter-spacing: 10px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        /* Savings, Loans, Insurance Flows */
+        .flow-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 15px;
             margin: 20px 0;
         }
 
-        .amount-btn {
-            padding: 12px 20px;
+        .option-btn {
             background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: none;
+            padding: 15px;
             border-radius: 10px;
-            color: var(--text);
+            color: white;
             cursor: pointer;
-            transition: var(--transition);
+            transition: background 0.3s;
         }
 
-        .amount-btn:hover, .amount-btn.selected {
-            background: var(--accent);
-            color: var(--primary);
+        .option-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
 
-        /* Rewards Section */
-        .rewards-display {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            margin: 20px 0;
+        .option-btn.selected {
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
         }
 
-        .rewards-points {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin: 10px 0;
+        /* Hidden Elements */
+        .hidden {
+            display: none;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            h1 {
+            .hero h1 {
                 font-size: 2.5rem;
             }
-            
-            h2 {
-                font-size: 2rem;
+
+            .hero p {
+                font-size: 1.2rem;
             }
-            
+
             .nav-links {
                 display: none;
             }
-            
+
             section {
                 padding: 60px 0;
             }
@@ -348,7 +377,7 @@
 <body>
     <!-- Navigation -->
     <nav>
-        <div class="container nav-container">
+        <div class="container">
             <div class="logo">FinOne</div>
             <div class="nav-links">
                 <a href="#problem">Problem</a>
@@ -361,38 +390,36 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="container hero-content">
-            <h1>FinOne — Universal Super Wallet</h1>
-            <p class="subtitle">Banking for Everyone, Everywhere</p>
-            <p class="tagline">Breaking barriers with vernacular voice payments, offline access, and AI-powered financial inclusion</p>
-            <a href="#waitlist" class="btn">Join Waitlist</a>
-        </div>
+        <h1>Universal Super Wallet</h1>
+        <p>Banking for Everyone, Everywhere</p>
+        <p class="tagline">Breaking barriers with innovative financial solutions for the next billion users</p>
+        <button class="btn" onclick="showWaitlist()">Join Waitlist</button>
     </section>
 
     <!-- Problem Section -->
     <section id="problem">
         <div class="container">
-            <h2>Financial Exclusion Challenges</h2>
-            <div class="cards-grid">
+            <h2 class="section-title">The Financial Inclusion Challenge</h2>
+            <div class="problem-cards">
                 <div class="card">
-                    <i class="fas fa-tractor"></i>
+                    <i class="fas fa-home"></i>
                     <h3>Rural Users</h3>
-                    <p>Limited internet connectivity and lack of digital literacy hinder financial access in remote areas.</p>
+                    <p>Limited access to banking infrastructure and digital literacy</p>
                 </div>
                 <div class="card">
                     <i class="fas fa-user-alt"></i>
                     <h3>Seniors</h3>
-                    <p>Complex interfaces and English-only apps create barriers for older generations.</p>
+                    <p>Complex interfaces and lack of vernacular support</p>
                 </div>
                 <div class="card">
                     <i class="fas fa-graduation-cap"></i>
                     <h3>Youth</h3>
-                    <p>High fees and lack of financial education prevent young people from building credit.</p>
+                    <p>Need for engaging, gamified financial education</p>
                 </div>
                 <div class="card">
                     <i class="fas fa-briefcase"></i>
                     <h3>Gig Workers</h3>
-                    <p>Irregular income patterns make traditional banking services inaccessible.</p>
+                    <p>Irregular income patterns and lack of credit history</p>
                 </div>
             </div>
         </div>
@@ -401,32 +428,27 @@
     <!-- Solution Section -->
     <section id="solution">
         <div class="container">
-            <h2>Innovative Solutions</h2>
-            <div class="cards-grid">
+            <h2 class="section-title">Our Revolutionary Solutions</h2>
+            <div class="solution-cards">
                 <div class="card">
-                    <i class="fas fa-microphone"></i>
+                    <i class="fas fa-microphone-alt"></i>
                     <h3>Vernacular Voice Payments</h3>
-                    <p>Send money using your local language through advanced speech recognition.</p>
                 </div>
                 <div class="card">
                     <i class="fas fa-wifi"></i>
                     <h3>Offline Access</h3>
-                    <p>Full functionality even without internet using mesh networking technology.</p>
                 </div>
                 <div class="card">
                     <i class="fas fa-brain"></i>
                     <h3>AI Credit Scoring</h3>
-                    <p>Alternative credit assessment using behavioral and social data patterns.</p>
                 </div>
                 <div class="card">
                     <i class="fas fa-gamepad"></i>
                     <h3>Gamified Literacy</h3>
-                    <p>Learn finance through engaging games and earn rewards for progress.</p>
                 </div>
                 <div class="card">
                     <i class="fas fa-mobile-alt"></i>
                     <h3>Unified App</h3>
-                    <p>All financial services in one simple, intuitive interface for everyone.</p>
                 </div>
             </div>
         </div>
@@ -435,45 +457,44 @@
     <!-- User Journey Section -->
     <section id="journey">
         <div class="container">
-            <h2>User Journeys</h2>
-            <div class="cards-grid">
-                <div class="card">
-                    <h3>👨‍💻 Teenager</h3>
-                    <p>"I saved ₹5000 for my first laptop using FinOne's gamified savings goals!"</p>
+            <h2 class="section-title">User Journey Stories</h2>
+            <div class="journey-stories">
+                <div class="story">
+                    <span class="emoji">🌾</span>
+                    <p>Priya, a farmer in rural Maharashtra, sends money to her daughter in Mumbai using just her voice in Marathi</p>
                 </div>
-                <div class="card">
-                    <h3>🌾 Farmer</h3>
-                    <p>"Got instant crop insurance payout after voice-commanding my claim!"</p>
+                <div class="story">
+                    <span class="emoji">👴</span>
+                    <p>Ramesh, 65, checks his savings balance in Hindi without needing help from his grandson</p>
                 </div>
-                <div class="card">
-                    <h3>🛵 Gig Worker</h3>
-                    <p>"Received a loan within minutes to repair my bike and resume work."</p>
+                <div class="story">
+                    <span class="emoji">🎓</span>
+                    <p>Aryan earns financial literacy points while playing games and unlocks his first loan</p>
                 </div>
-                <div class="card">
-                    <h3>👵 Senior</h3>
-                    <p>"Sent money to my grandson in Hindi without any help from family."</p>
+                <div class="story">
+                    <span class="emoji">🛵</span>
+                    <p>Meera, a delivery driver, builds her credit score through consistent transactions</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Waitlist Section -->
+    <!-- Waitlist Form -->
     <section id="waitlist">
         <div class="container">
-            <h2>Join the Financial Revolution</h2>
+            <h2 class="section-title">Join the FinOne Revolution</h2>
             <div class="waitlist-form">
                 <div class="form-group">
                     <label for="name">Full Name</label>
-                    <input type="text" id="name" placeholder="Enter your full name" required>
+                    <input type="text" id="name" placeholder="Enter your full name">
                 </div>
                 <div class="form-group">
                     <label for="email">Email Address</label>
-                    <input type="email" id="email" placeholder="Enter your email" required>
+                    <input type="email" id="email" placeholder="Enter your email">
                 </div>
                 <div class="form-group">
                     <label for="language">Preferred Language</label>
-                    <select id="language" required>
-                        <option value="">Select Language</option>
+                    <select id="language">
                         <option value="english">English</option>
                         <option value="hindi">Hindi</option>
                         <option value="tamil">Tamil</option>
@@ -495,351 +516,247 @@
     <section class="dashboard" id="dashboard">
         <div class="container">
             <div class="dashboard-header">
-                <h2>FinOne Dashboard</h2>
-                <button class="btn" onclick="showWaitlist()">← Back</button>
+                <h2 class="section-title">Your FinOne Dashboard</h2>
+                <button class="btn" onclick="logout()">Logout</button>
             </div>
             
-            <div class="rewards-display">
-                <h3>Your Reward Points</h3>
-                <div class="rewards-points" id="reward-points">0</div>
-                <p>Earn points for first-time transactions and financial activities</p>
-            </div>
-            
-            <div class="cards-grid">
-                <div class="card" onclick="showPaymentFlow()">
-                    <i class="fas fa-exchange-alt"></i>
+            <div class="dashboard-cards">
+                <div class="dashboard-card" onclick="showPaymentFlow()">
+                    <i class="fas fa-paper-plane"></i>
                     <h3>Payments</h3>
-                    <p>Send and receive money instantly</p>
+                    <p>Send & receive money</p>
                 </div>
-                <div class="card" onclick="showModule('savings')">
+                <div class="dashboard-card" onclick="showFlow('savings')">
                     <i class="fas fa-piggy-bank"></i>
                     <h3>Savings Goals</h3>
-                    <p>Save for your dreams systematically</p>
+                    <p>Save for your future</p>
                 </div>
-                <div class="card" onclick="showModule('loans')">
+                <div class="dashboard-card" onclick="showFlow('loans')">
                     <i class="fas fa-hand-holding-usd"></i>
                     <h3>Loans</h3>
-                    <p>Get instant personal loans</p>
+                    <p>Access quick loans</p>
                 </div>
-                <div class="card" onclick="showModule('insurance')">
+                <div class="dashboard-card" onclick="showFlow('insurance')">
                     <i class="fas fa-shield-alt"></i>
                     <h3>Insurance</h3>
-                    <p>Protect what matters most</p>
-                </div>
-                <div class="card" onclick="showModule('rewards')">
-                    <i class="fas fa-gift"></i>
-                    <h3>Rewards</h3>
-                    <p>Redeem your earned points</p>
+                    <p>Protect your future</p>
                 </div>
             </div>
 
-            <div class="qr-section">
-                <h3>Scan to Demo on Any Device</h3>
-                <canvas id="qr-code"></canvas>
-                <p>Point your phone camera to access FinOne anywhere</p>
+            <div class="qr-code">
+                <h3>Scan to Open FinOne</h3>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://finone.example.com" alt="QR Code">
             </div>
         </div>
     </section>
 
     <!-- Payment Flow -->
-    <section class="payment-flow" id="payment-flow">
-        <h3>Voice Payment</h3>
-        <div class="mic-input">
-            <p>Say: "Send ₹500 to Raghav Gupta"</p>
-            <button class="mic-btn" id="mic-btn" onclick="startListening()">
-                <i class="fas fa-microphone"></i>
-            </button>
-            <p id="transcript">Click microphone to speak...</p>
-        </div>
+    <div class="payment-flow" id="payment-flow">
+        <h2>Send Money with Voice</h2>
+        <button class="mic-btn" id="mic-btn" onclick="startVoiceInput()">
+            <i class="fas fa-microphone"></i>
+        </button>
+        <p id="voice-status">Click mic to speak your payment command</p>
+        <div id="command-display" class="hidden"></div>
         
-        <div id="verification-step" style="display:none;">
-            <p>Verification Code: <strong id="ver-code"></strong></p>
-            <div class="form-group">
-                <label for="verify-code">Enter Code</label>
-                <input type="text" id="verify-code" placeholder="Enter 4-digit code">
-            </div>
-            <button class="btn" onclick="verifyCode()">Verify</button>
+        <div class="verification" id="verification">
+            <h3>Verification Code for Receiver</h3>
+            <div class="code-display" id="verification-code"></div>
+            <p>Share this code with the receiver to confirm transaction</p>
+            <button class="btn" onclick="simulateReceiverConfirmation()">Simulate Receiver Confirmation</button>
         </div>
-        
-        <div id="receiver-transaction-step" style="display:none;">
-            <h3>Receiver's First Transaction</h3>
-            <p>Receiver must complete their first transaction to unlock rewards</p>
-            <button class="btn" onclick="completeReceiverTransaction()">Complete Receiver Transaction</button>
-        </div>
-        
-        <button class="btn" onclick="hidePaymentFlow()" style="background:rgba(255,255,255,0.1);">Cancel</button>
-    </section>
+    </div>
 
-    <!-- Savings Module -->
-    <section class="module-section" id="savings-module">
-        <div class="container">
-            <h2>Savings Goals</h2>
-            <div class="cards-grid">
-                <div class="card" onclick="setSavingsGoal('Mobile', [10,20,50,100,500,1500,2000,5000])">
-                    <i class="fas fa-mobile-alt"></i>
-                    <h3>Mobile Phone</h3>
-                </div>
-                <div class="card" onclick="setSavingsGoal('Laptop', [10,20,50,100,500,1500,2000,5000])">
-                    <i class="fas fa-laptop"></i>
-                    <h3>Laptop</h3>
-                </div>
-                <div class="card" onclick="setSavingsGoal('House', [10,20,50,100,500,1500,2000,5000])">
-                    <i class="fas fa-home"></i>
-                    <h3>House</h3>
-                </div>
-                <div class="card" onclick="setSavingsGoal('Jewelry', [10,20,50,100,500,1500,2000,5000])">
-                    <i class="fas fa-gem"></i>
-                    <h3>Jewelry</h3>
-                </div>
-                <div class="card" onclick="setSavingsGoal('Startup', [10,20,50,100,500,1500,2000,5000])">
-                    <i class="fas fa-chart-line"></i>
-                    <h3>Startup</h3>
-                </div>
-            </div>
-            
-            <div id="savings-amounts" style="display:none; margin-top:30px;">
-                <h3>Save for <span id="goal-name"></span></h3>
-                <div class="amount-options" id="amount-options"></div>
-                <button class="btn" onclick="simulateSaving()">Start Saving</button>
-            </div>
-            
-            <button class="btn" onclick="hideModule('savings')" style="background:rgba(255,255,255,0.1); margin-top:30px;">Back</button>
+    <!-- Generic Flow Template -->
+    <div class="payment-flow" id="generic-flow">
+        <h2 id="flow-title">Flow Title</h2>
+        <p>Select an amount:</p>
+        <div class="flow-options" id="flow-options">
+            <!-- Options will be populated by JS -->
         </div>
-    </section>
-
-    <!-- Loans Module -->
-    <section class="module-section" id="loans-module">
-        <div class="container">
-            <h2>Instant Loans</h2>
-            <div class="amount-options">
-                <div class="amount-btn" onclick="selectLoanAmount(500)">₹500</div>
-                <div class="amount-btn" onclick="selectLoanAmount(5000)">₹5,000</div>
-                <div class="amount-btn" onclick="selectLoanAmount(10000)">₹10,000</div>
-                <div class="amount-btn" onclick="selectLoanAmount(50000)">₹50,000</div>
-                <div class="amount-btn" onclick="selectLoanAmount(100000)">₹1,00,000</div>
-                <div class="amount-btn" onclick="selectLoanAmount(500000)">₹5,00,000</div>
-                <div class="amount-btn" onclick="selectLoanAmount(1000000)">₹10,00,000</div>
-            </div>
-            <button class="btn" onclick="simulateLoanApproval()">Apply for Loan</button>
-            <button class="btn" onclick="hideModule('loans')" style="background:rgba(255,255,255,0.1); margin-top:20px;">Back</button>
-        </div>
-    </section>
-
-    <!-- Insurance Module -->
-    <section class="module-section" id="insurance-module">
-        <div class="container">
-            <h2>Insurance Protection</h2>
-            <div class="cards-grid">
-                <div class="card" onclick="purchaseInsurance('Agriculture')">
-                    <i class="fas fa-seedling"></i>
-                    <h3>Agriculture</h3>
-                </div>
-                <div class="card" onclick="purchaseInsurance('Home')">
-                    <i class="fas fa-home"></i>
-                    <h3>Home</h3>
-                </div>
-                <div class="card" onclick="purchaseInsurance('Shop')">
-                    <i class="fas fa-store"></i>
-                    <h3>Shop</h3>
-                </div>
-                <div class="card" onclick="purchaseInsurance('Human')">
-                    <i class="fas fa-user-injured"></i>
-                    <h3>Human</h3>
-                </div>
-                <div class="card" onclick="purchaseInsurance('Vehicle')">
-                    <i class="fas fa-car"></i>
-                    <h3>Vehicle</h3>
-                </div>
-                <div class="card" onclick="purchaseInsurance('Life')">
-                    <i class="fas fa-heartbeat"></i>
-                    <h3>Life</h3>
-                </div>
-            </div>
-            <button class="btn" onclick="hideModule('insurance')" style="background:rgba(255,255,255,0.1); margin-top:30px;">Back</button>
-        </div>
-    </section>
-
-    <!-- Rewards Module -->
-    <section class="module-section" id="rewards-module">
-        <div class="container">
-            <h2>Your Rewards</h2>
-            <div class="rewards-display">
-                <h3>Total Reward Points</h3>
-                <div class="rewards-points" id="rewards-total">0</div>
-                <p>Earned through first-time transactions and financial activities</p>
-            </div>
-            
-            <div class="cards-grid">
-                <div class="card">
-                    <i class="fas fa-gift"></i>
-                    <h3>Redeem Points</h3>
-                    <p>Exchange points for cashback or services</p>
-                </div>
-                <div class="card">
-                    <i class="fas fa-history"></i>
-                    <h3>Reward History</h3>
-                    <p>View your earned rewards timeline</p>
-                </div>
-            </div>
-            
-            <button class="btn" onclick="hideModule('rewards')" style="background:rgba(255,255,255,0.1); margin-top:30px;">Back</button>
-        </div>
-    </section>
+        <button class="btn" onclick="completeTransaction()">Complete Transaction</button>
+    </div>
 
     <script>
-        // Global state
-        let currentUser = null;
-        let rewardPoints = 0;
-        let firstTimeReceivers = new Set(); // Track first-time receivers
+        // Global variables for rewards tracking (hidden from user)
+        let userRewards = {
+            senderPoints: 0,
+            receiverPoints: 0,
+            totalTransactions: 0
+        };
 
-        // Waitlist functionality
+        // Show waitlist form
+        function showWaitlist() {
+            document.getElementById('waitlist').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Submit waitlist form
         function submitWaitlist() {
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
-            const language = document.getElementById('language').value;
             
-            if (name && email && language) {
-                currentUser = { name, email, language };
-                showDashboard();
+            if (name && email) {
+                document.querySelector('#waitlist').style.display = 'none';
+                document.querySelector('.dashboard').style.display = 'block';
+                document.querySelector('.dashboard').scrollIntoView({ behavior: 'smooth' });
             } else {
-                alert('Please fill all fields');
+                alert('Please fill in all fields');
             }
         }
 
-        function showDashboard() {
-            document.getElementById('waitlist').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
+        // Logout
+        function logout() {
+            document.querySelector('.dashboard').style.display = 'none';
+            document.querySelector('#waitlist').style.display = 'block';
+            document.getElementById('name').value = '';
+            document.getElementById('email').value = '';
+        }
+
+        // Show payment flow
+        function showPaymentFlow() {
+            document.querySelector('.dashboard').style.display = 'none';
+            document.getElementById('payment-flow').style.display = 'block';
+        }
+
+        // Show generic flow (savings, loans, insurance)
+        function showFlow(type) {
+            document.querySelector('.dashboard').style.display = 'none';
+            const flow = document.getElementById('generic-flow');
+            const title = document.getElementById('flow-title');
+            const options = document.getElementById('flow-options');
             
-            // Update reward points display
-            updateRewardPoints();
+            // Reset options
+            options.innerHTML = '';
             
-            // Generate QR code
-            const qr = new QRious({
-                element: document.getElementById('qr-code'),
-                value: window.location.href,
-                size: 200
-            });
-        }
-
-        function showWaitlist() {
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('waitlist').style.display = 'block';
-        }
-
-        // Reward points management
-        function updateRewardPoints() {
-            document.getElementById('reward-points').textContent = rewardPoints;
-            document.getElementById('rewards-total').textContent = rewardPoints;
-        }
-
-        function addRewardPoints(points) {
-            rewardPoints += points;
-            updateRewardPoints();
-            
-            // Show confetti for rewards
-            confetti({
-                particleCount: 50,
-                spread: 50,
-                origin: { y: 0.8 }
-            });
-        }
-
-        // Payment Flow
-        let recognition;
-        try {
-            recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-            recognition.lang = 'en-US';
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 1;
-        } catch (e) {
-            console.log('Speech Recognition not supported');
-        }
-
-        function startListening() {
-            const micBtn = document.getElementById('mic-btn');
-            
-            if (recognition) {
-                recognition.start();
-                micBtn.classList.add('listening');
-                
-                recognition.onresult = function(event) {
-                    const transcript = event.results[0][0].transcript;
-                    document.getElementById('transcript').textContent = transcript;
-                    processVoiceCommand(transcript);
-                    micBtn.classList.remove('listening');
-                };
-                
-                recognition.onerror = function(event) {
-                    console.error('Speech recognition error', event.error);
-                    micBtn.classList.remove('listening');
-                };
-            } else {
-                // Simulate voice input for unsupported browsers
-                const simulatedCommands = [
-                    "Send ₹500 to Raghav Gupta",
-                    "Transfer ₹1000 to Priya Sharma",
-                    "Pay ₹250 to Rajesh Kumar"
-                ];
-                const randomCommand = simulatedCommands[Math.floor(Math.random() * simulatedCommands.length)];
-                document.getElementById('transcript').textContent = randomCommand;
-                processVoiceCommand(randomCommand);
+            // Set title and options based on type
+            switch(type) {
+                case 'savings':
+                    title.textContent = 'Create Savings Goal';
+                    [100, 500, 1000, 2000, 5000].forEach(amount => {
+                        const btn = document.createElement('button');
+                        btn.className = 'option-btn';
+                        btn.textContent = `₹${amount}`;
+                        btn.onclick = () => selectOption(btn);
+                        options.appendChild(btn);
+                    });
+                    break;
+                case 'loans':
+                    title.textContent = 'Apply for Loan';
+                    [5000, 10000, 20000, 50000, 100000].forEach(amount => {
+                        const btn = document.createElement('button');
+                        btn.className = 'option-btn';
+                        btn.textContent = `₹${amount}`;
+                        btn.onclick = () => selectOption(btn);
+                        options.appendChild(btn);
+                    });
+                    break;
+                case 'insurance':
+                    title.textContent = 'Buy Insurance';
+                    [500, 1000, 2000, 5000, 10000].forEach(amount => {
+                        const btn = document.createElement('button');
+                        btn.className = 'option-btn';
+                        btn.textContent = `₹${amount}/year`;
+                        btn.onclick = () => selectOption(btn);
+                        options.appendChild(btn);
+                    });
+                    break;
             }
+            
+            flow.style.display = 'block';
         }
 
-        function processVoiceCommand(command) {
-            // Simple parsing - in reality, this would be more sophisticated
-            const amountMatch = command.match(/(?:₹|rs|rupees)\s*(\d+)/i);
-            const nameMatch = command.match(/to\s+(.+)%%%LATEX_BLOCK_0%%%{amount} to %%%LATEX_BLOCK_1%%%{amount} to %%%LATEX_BLOCK_2%%%{moduleName}-module`).style.display = 'block';
-        }
-
-        function hideModule(moduleName) {
-            document.getElementById(`%%%LATEX_BLOCK_3%%%{amount}`;
-                btn.onclick = function() {
-                    document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
-                    this.classList.add('selected');
-                    window.selectedAmount = amount;
-                };
-                optionsContainer.appendChild(btn);
+        // Select option in flows
+        function selectOption(button) {
+            // Remove selected class from all buttons
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.classList.remove('selected');
             });
             
-            document.getElementById('savings-amounts').style.display = 'block';
+            // Add selected class to clicked button
+            button.classList.add('selected');
         }
 
-        function simulateSaving() {
-            if (window.selectedAmount) {
-                addRewardPoints(10); // Reward for setting savings goal
-                alert(`Started saving ₹%%%LATEX_BLOCK_4%%%{document.getElementById('goal-name').textContent}! You earned 10 reward points!`);
-                hideModule('savings');
+        // Complete transaction in generic flows
+        function completeTransaction() {
+            const selected = document.querySelector('.option-btn.selected');
+            if (selected) {
+                alert(`Transaction completed for ${selected.textContent}!`);
+                hideAllFlows();
+                document.querySelector('.dashboard').style.display = 'block';
             } else {
                 alert('Please select an amount');
             }
         }
 
-        // Loans Module
-        function selectLoanAmount(amount) {
-            document.querySelectorAll('.amount-btn').forEach(btn => btn.classList.remove('selected'));
-            event.target.classList.add('selected');
-            window.selectedLoanAmount = amount;
+        // Hide all flows
+        function hideAllFlows() {
+            document.getElementById('payment-flow').style.display = 'none';
+            document.getElementById('generic-flow').style.display = 'none';
         }
 
-        function simulateLoanApproval() {
-            if (window.selectedLoanAmount) {
-                addRewardPoints(20); // Reward for loan application
-                alert(`Loan of ₹%%%LATEX_BLOCK_5%%%{type} insurance purchased successfully! You earned 15 reward points! Your policy details will be sent to your registered email.`);
-            hideModule('insurance');
+        // Start voice input simulation
+        function startVoiceInput() {
+            const status = document.getElementById('voice-status');
+            const micBtn = document.getElementById('mic-btn');
+            
+            status.textContent = "Listening... Speak now";
+            micBtn.style.background = "linear-gradient(45deg, #ff6b6b, #ffa502)";
+            
+            // Simulate voice recognition after 2 seconds
+            setTimeout(() => {
+                // Simulated command - in real app, this would come from SpeechRecognition API
+                const commands = [
+                    "Send ₹500 to Raghav Gupta",
+                    "Transfer ₹1000 to Priya Sharma",
+                    "Pay ₹250 to Amit Kumar"
+                ];
+                
+                const command = commands[Math.floor(Math.random() * commands.length)];
+                processVoiceCommand(command);
+            }, 2000);
         }
 
-        // Smooth scrolling for navigation
+        // Process voice command
+        function processVoiceCommand(command) {
+            document.getElementById('voice-status').textContent = "Processing...";
+            document.getElementById('mic-btn').style.background = "linear-gradient(45deg, var(--accent-primary), var(--accent-secondary))";
+            
+            // Display command
+            const commandDisplay = document.getElementById('command-display');
+            commandDisplay.textContent = `Command: "${command}"`;
+            commandDisplay.classList.remove('hidden');
+            
+            // Generate verification code
+            const verificationCode = Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('verification-code').textContent = verificationCode;
+            
+            // Show verification section
+            document.getElementById('verification').style.display = 'block';
+        }
+
+        // Simulate receiver confirmation
+        function simulateReceiverConfirmation() {
+            // Grant points to both sender and receiver (hidden logic)
+            userRewards.senderPoints += 10;
+            userRewards.receiverPoints += 10;
+            userRewards.totalTransactions += 1;
+            
+            alert("Transaction successful! Both parties have been rewarded internally.");
+            
+            // Reset payment flow
+            document.getElementById('payment-flow').style.display = 'none';
+            document.getElementById('command-display').classList.add('hidden');
+            document.getElementById('verification').style.display = 'none';
+            document.querySelector('.dashboard').style.display = 'block';
+        }
+
+        // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
             });
         });
     </script>
